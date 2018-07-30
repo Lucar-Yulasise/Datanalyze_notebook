@@ -1,0 +1,124 @@
+作业：
+1、创建一个长度为10的一维全为0的ndarray对象，然后让第5个元素等于1
+Z = np.zeros(10)
+Z[4] = 1
+
+2、创建一个元素为从10到49的ndarray对象
+Z = np.arange(10,50)
+
+3、将第2题的所有元素位置反转
+Z = Z[::-1]
+
+4、使用np.random.random创建一个10*10的ndarray对象，并打印出最大最小元素
+Z = np.random.random((10,10))
+Zmin, Zmax = Z.min(), Z.max()
+print(Zmin, Zmax)
+
+5、创建一个10*10的ndarray对象，且矩阵边界全为1，里面全为0
+Z = np.ones((10,10))
+Z[1:-1,1:-1] = 0
+print(Z)
+
+6、创建一个每一行都是从0到4的5*5矩阵
+Z = np.zeros((5,5))
+Z += np.arange(5)
+print(Z)
+
+7、创建一个范围在(0,1)之间的长度为12的等差数列
+Z = np.linspace(0,1,12,endpoint=True)[1:-1]
+print(Z)
+
+8、创建一个长度为10的随机数组并排序
+Z = np.random.random(10)
+Z.sort()
+print(Z)
+
+9、创建一个长度为10的随机数组并将最大值替换为0
+Z = np.random.random(10)
+Z[Z.argmax()] = 0
+print(Z)
+
+10、如何根据第3列来对一个5*5矩阵排序？
+np.random.seed(10)
+z = np.random.randint(0,10,(5,5))
+print(z)
+# print(z[0])#打印第一行
+# print(z[:,3])#打印输出第四列
+# print(np.sort(z[:,3]))
+print(np.argsort(z[:,3])) #argsort函数返回的是数组值从小到大的索引值
+print(z[np.argsort(z[:,3])])
+
+11、给定一个4维矩阵，如何得到最后两维的和？
+A = np.random.randint(0,10,(3,4,3,4))
+# solution by passing a tuple of axes (introduced in numpy 1.7.0)
+sum = A.sum(axis=(-2,-1))
+print(sum)
+
+12、给定数组[1, 2, 3, 4, 5]，如何得到在这个数组的每个元素之间插入3个0后的新数组？
+Z = np.array([1,2,3,4,5])
+nz = 3
+Z0 = np.zeros(len(Z) + (len(Z)-1)*(nz))
+Z0[::nz+1] = Z
+print(Z0)
+
+13、给定一个二维矩阵，如何交换其中两行的元素？
+A = np.arange(25).reshape(5,5)
+A[[0,1]] = A[[1,0]]
+print(A)
+
+14、创建一个100000长度的随机数组，使用两种方法对其求三次方，并比较所用时间
+x = np.random.rand(100000)
+
+%timeit np.power(x,3)
+%timeit x*x*x
+
+15、创建一个5*3随机矩阵和一个3*2随机矩阵，求矩阵积
+Z = np.dot(np.random.random((5,3)), np.random.random((3,2)))
+print(Z)
+
+16、矩阵的每一行的元素都减去该行的平均值
+X = np.random.rand(5, 10)
+Y = X - X.mean(axis=1).reshape(5, 1)
+            
+17、打印出以下函数（要求使用np.zeros创建8*8的矩阵）：
+[[0 1 0 1 0 1 0 1]
+ [1 0 1 0 1 0 1 0]
+ [0 1 0 1 0 1 0 1]
+ [1 0 1 0 1 0 1 0]
+ [0 1 0 1 0 1 0 1]
+ [1 0 1 0 1 0 1 0]
+ [0 1 0 1 0 1 0 1]
+ [1 0 1 0 1 0 1 0]]
+
+Z = np.zeros((8,8),dtype=int)
+Z[1::2,::2] = 1
+Z[::2,1::2] = 1
+print(Z)
+
+
+18、正则化一个5*5随机矩阵
+正则的概念：假设a是矩阵中的一个元素，max/min分别是矩阵元素的最大最小值，则正则化后a = (a - min)/(max - min)
+Z = np.random.random((5,5))
+Zmax, Zmin = Z.max(), Z.min()
+Z = (Z - Zmin)/(Zmax - Zmin)
+print(Z)
+
+19、将一个一维数组转化为二进制表示矩阵。例如
+[1,2,3]
+转化为
+[[0,0,1],
+[0,1,0],
+[0,1,1]]
+
+I = np.array([0, 1, 2, 3, 15, 16, 32, 64, 128])
+B = ((I.reshape(-1,1) & (2**np.arange(8))) != 0).astype(int)
+print(B[:,::-1])
+
+20、实现冒泡排序法
+def bubblesort(numbers):
+    for j in range(len(numbers)-1,-1,-1):
+        for i in range(j):
+            if numbers[i]>numbers[i+1]:
+                numbers[i],numbers[i+1] = numbers[i+1],numbers[i]
+            print(i,j)
+            print(numbers)
